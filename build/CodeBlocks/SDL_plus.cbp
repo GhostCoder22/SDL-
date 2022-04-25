@@ -22,8 +22,8 @@
 				<Linker>
 					<Add option="-s" />
 					<Add option="-m64" />
-					<Add library="../../lib/x64/libSDL2main.a" />
-					<Add library="../../lib/x64/libSDL2.dll.a" />
+					<Add library="../../contrib/SDL2/lib/x64/libSDL2main.a" />
+					<Add library="../../contrib/SDL2/lib/x64/libSDL2.dll.a" />
 				</Linker>
 			</Target>
 			<Target title="Windows 32-bit">
@@ -40,7 +40,8 @@
 				<Linker>
 					<Add option="-s" />
 					<Add option="-m32" />
-					<Add library="../../lib/x86/libSDL2.dll.a" />
+					<Add library="../../contrib/SDL2/lib/x32/libSDL2main.a" />
+					<Add library="../../contrib/SDL2/lib/x32/libSDL2.dll.a" />
 				</Linker>
 			</Target>
 		</Build>
@@ -49,7 +50,7 @@
 			<Add option="-D__WIN32__" />
 			<Add option="-DWINDOWS" />
 			<Add option="-DBUILDLIB_SDLP" />
-			<Add directory="../../include" />
+			<Add directory="../../contrib/SDL2/include" />
 		</Compiler>
 		<Linker>
 			<Add option="-static-libstdc++" />
