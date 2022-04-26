@@ -1,7 +1,7 @@
 SDL+: Object-Oriented SDL
-Copyright (C) 2022 Kris Houston <ghostcoder22@gmail.com>
+Copyright (C) 2022 Ghost Coder <ghostcoder22@gmail.com>
 
-SDL+ is an object-oriented approach for wrapping SDL around the C++ language, but it's my hope that, one day, SDL+ will hopefully extend Sam Lantinga's SDL in such a way to provide drawn widget support, dynamic loading and usage of SDL2_image, SDL2_mixer, SDL2_net, and SDL2_ttf.
+SDL+ is my object-oriented approach for wrapping SDL around the C++ language, but it's my hope that, one day, SDL+ will hopefully extend Sam Lantinga's SDL in such a way to provide drawn widget support, dynamic loading and usage of SDL2_image, SDL2_mixer, SDL2_net, and SDL2_ttf.
 
 So far, SDL+ includes the following features:
 
@@ -22,3 +22,5 @@ Until I'm able to build an automated script or put together a batch file, the in
 INSTALLATION LEGEND: <SDL2-2.x> refers to SDL 2's version folder within SDL2-devel-2.x-mingw. <SDL_plus> refers to SDL+ install folder.
 
 At this time, Code::Blocks the only available project. Please note SDL+ is under active development by myself.
+
+If anyone has any suggestions and/or ideas, please don't hesitate to contribute potential ideas to this project by emailing me, Ghost Coder, at ghostcoder22@gmail.com.
