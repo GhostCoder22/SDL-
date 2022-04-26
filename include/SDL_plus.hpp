@@ -1,6 +1,6 @@
 /*
   SDL+: Object-Oriented SDL
-  Copyright (C) 2022 Kris Houston <ghostcoder22@gmail.com>
+  Copyright (C) 2022 Ghost Coder <ghostcoder22@gmail.com>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
