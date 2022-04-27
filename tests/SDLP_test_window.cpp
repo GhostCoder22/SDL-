@@ -74,6 +74,14 @@ define_SDLP_app(SDLP_test_window)
       iface->Quit();
       return 0;
     }
+
+    virtual bool onQuitEvent(CSDL* iface, CSDL_Window* window)
+    {
+      char string[255];
+      sprintf(string, "%s on %s quitting!", iface->AppName(), window->Title());
+      SDL_ShowSimpleMessageBox(0, "onQuitEvent", string, window->Handle());
+      return true;
+    }
 };
 declare_SDLP_app(SDLP_test_window, "SDLP_test_window");
 

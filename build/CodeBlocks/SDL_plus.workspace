@@ -2,11 +2,16 @@
 <CodeBlocks_workspace_file>
 	<Workspace title="SDL+ Library">
 		<Project filename="SDL_plus.cbp" />
+		<Project filename="tests/SDLP_test.cbp">
+			<Depends filename="SDL_plus.cbp" />
+		</Project>
 		<Project filename="tests/SDLP_test_main.cbp">
 			<Depends filename="SDL_plus.cbp" />
 		</Project>
 		<Project filename="tests/SDLP_test_window.cbp">
 			<Depends filename="SDL_plus.cbp" />
 		</Project>
+		<Project filename="tests/SDLP_test_WalkDisplayModes.cbp" />
+			<Depends filename="SDL_plus.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>

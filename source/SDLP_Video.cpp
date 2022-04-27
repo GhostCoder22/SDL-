@@ -28,6 +28,108 @@
 #include <SDL_plus/SDLP_Video.hpp>
 #include "SDLP_internals.hpp"
 
+CSDL_Video::CSDL_Video() {}
+CSDL_Video::~CSDL_Video() {}
+CSDL_Video* CSDL_Video::Instance() { return this; }
+
+int CSDL_Video::WalkDisplayModes(SDLP_DisplayModeWalker walker)
+{
+  return WalkDisplayModesEx(0, walker);
+}
+
+int CSDL_Video::WalkDisplayModesEx(int displayIndex, SDLP_DisplayModeWalker walker)
+{
+  if (walker == nullptr)
+  {
+    SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Missing parameter.");
+    return -1;
+  }
+
+  int displays = (displayIndex == 0 ? 0 : SDL_GetNumVideoDisplays());
+  int displayModes = SDL_GetNumDisplayModes(displays);
+  if (displayModes < 1)
+    return displayModes;
+
+  for (int i = 0; i < displayModes; i++)
+  {
+    SDL_DisplayMode displayMode;
+    if (SDL_GetDisplayMode(displays, i, &displayMode) == 0)
+    {
+      int result = (walker)(i, &displayMode);
+      if (result < 0)
+        return -1;
+    }
+  }
+  return 0;
+}
+
+
+const char* CSDL_Video::GetCurrentVideoDriver()
+{
+  return SDL_GetCurrentVideoDriver();
+}
+
+const char* CSDL_Video::GetVideoDriver(int index)
+{
+  return SDL_GetVideoDriver(index);
+}
+
+int CSDL_Video::GetNumVideoDrivers()
+{
+  return SDL_GetNumVideoDrivers();
+}
+
+
+const char* CSDL_Video::GetDisplayName(int displayIndex)
+{
+  return SDL_GetDisplayName(displayIndex);
+}
+
+
+int CSDL_Video::GetCurrentDisplayMode(int displayIndex, SDL_DisplayMode *mode)
+{
+  return SDL_GetCurrentDisplayMode(displayIndex, mode);
+}
+
+int CSDL_Video::GetDesktopDisplayMode(int displayIndex, SDL_DisplayMode *mode)
+{
+  return SDL_GetDesktopDisplayMode(displayIndex, mode);
+}
+
+int CSDL_Video::GetDisplayBounds(int displayIndex, SDL_Rect *rect)
+{
+  return SDL_GetDisplayBounds(displayIndex, rect);
+}
+
+int CSDL_Video::GetNumVideoDisplays()
+{
+  return SDL_GetNumVideoDisplays();
+}
+
+int CSDL_Video::GetNumDisplayModes(int displayIndex)
+{
+  return SDL_GetNumDisplayModes(displayIndex);
+}
+
+int CSDL_Video::GetDisplayMode(int displayIndex, int modeIndex, SDL_DisplayMode *mode)
+{
+  return SDL_GetDisplayMode(displayIndex, modeIndex, mode);
+}
+
+SDL_DisplayMode* CSDL_Video::GetClosestDisplayMode
+ (int displayIndex, const SDL_DisplayMode * mode, SDL_DisplayMode * closest)
+{
+  return SDL_GetClosestDisplayMode(displayIndex, mode, closest);
+}
+
+int CSDL_Video::GetDisplayDPI(int displayIndex, float * ddpi, float * hdpi, float * vdpi)
+{
+  return SDL_GetDisplayDPI(displayIndex, ddpi, hdpi, vdpi);
+}
+
+
+
+
 TList2W<CSDL_Window*> SDLP_WindowTable;
 TNode2W<CSDL_Window*>** SDLP_WindowTablePtr()
 {
@@ -35,16 +137,22 @@ TNode2W<CSDL_Window*>** SDLP_WindowTablePtr()
   return &(*windowTable);
 }
 
+TNodeID  SDLP_WindowRef = 0;
+void CSDL_Window_AddRef() { SDLP_WindowRef++; }
+void CSDL_Window_ReleaseRef() { SDLP_WindowRef--; }
+TNodeID CSDL_Window_Ref() { return SDLP_WindowRef; }
 
 CSDL_Window::CSDL_Window()
 {
   m_pWindow = nullptr;
+  m_szTitle = nullptr;
   m_fFullscreen = 0;
 }
 
 CSDL_Window::~CSDL_Window()
 {
   m_pWindow = nullptr;
+  m_szTitle = nullptr;
   m_fFullscreen = 0;
 }
 
@@ -62,7 +170,9 @@ SDL_Window* CSDL_Window::Create(const char* title, int x, int y, int w, int h, U
     if (m_pWindow != nullptr)
     {
       CSDL_Surface::GetFromWindow(this);
+      m_szTitle = title;
       SDLP_WindowTable.Add(this);
+      CSDL_Window_AddRef();
     }
   }
   return m_pWindow;
@@ -85,13 +195,51 @@ SDL_Window* CSDL_Window::CreateWithRenderer(const char* title, int width, int he
   return m_pWindow;
 }
 
-SDL_Window* CSDL_Window::Handle()
+SDL_Window* CSDL_Window::CreateFrom(const void *data)
 {
+  if ((m_pWindow == nullptr) && (data != nullptr))
+  {
+    m_pWindow = SDL_CreateWindowFrom(data);
+    if (m_pWindow != nullptr)
+    {
+      CSDL_Surface::GetFromWindow(this);
+      m_szTitle = "CSDL_Window::CreateFrom";
+      SDLP_WindowTable.Add(this);
+      CSDL_Window_AddRef();
+    }
+  }
   return m_pWindow;
 }
 
+void CSDL_Window::Destroy()
+{
+  if (m_pWindow != nullptr)
+  {
+    SDL_DestroyWindow(m_pWindow);
+    CSDL_Window_ReleaseRef();
+  }
+}
 
-int CSDL_Window::SetFullscreen(Uint32 flags)
+SDL_Window* CSDL_Window::Handle() { return m_pWindow; }
+
+Ustring CSDL_Window::Title() { return m_szTitle; }
+
+
+int CSDL_Window::SetDisplayMode(const SDL_DisplayMode *mode)
+{
+  if ((m_pWindow != nullptr) && (mode != nullptr))
+    return SDL_SetWindowDisplayMode(m_pWindow, mode);
+  return -1;
+}
+
+int CSDL_Window::GetDisplayMode(SDL_DisplayMode *mode)
+{
+  if ((m_pWindow != nullptr) && (mode != nullptr))
+    return SDL_GetWindowDisplayMode(m_pWindow, mode);
+  return -1;
+}
+
+int CSDL_Window::SetFullscreenMode(Uint32 flags)
 {
   if (m_pWindow != nullptr)
   {
@@ -103,21 +251,15 @@ int CSDL_Window::SetFullscreen(Uint32 flags)
   return -1;
 }
 
-int CSDL_Window::GetFullscreen()
+int CSDL_Window::GetFullscreenMode()
 {
   return m_fFullscreen;
 }
 
-int CSDL_Window::Fullscreen()
-{
-  int fullscreen = 0;
-  if (m_fFullscreen == SDL_WINDOW_FULLSCREEN)
-    fullscreen = 0;
-  else
-    fullscreen = SDL_WINDOW_FULLSCREEN;
-  return SetFullscreen(fullscreen);
-}
 
+void CSDL_Window::DisableScreenSaver() { SDL_DisableScreenSaver(); }
+void CSDL_Window::EnableScreenSaver() { SDL_EnableScreenSaver(); }
+bool CSDL_Window::IsScreenSaverEnabled() { return SDL_IsScreenSaverEnabled(); }
 
 
 // [Events]

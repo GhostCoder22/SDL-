@@ -2,13 +2,13 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="SDL Test" />
+		<Option title="SDL+ Test: WalkDisplayModes" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Windows 64-bit">
-				<Option output="../../../bin/win64/SDL_test_main" prefix_auto="1" extension_auto="1" />
-				<Option object_output="../../obj/x64" />
+				<Option output="../../../bin/win64/SDLP_test_WalkDisplayModes" prefix_auto="1" extension_auto="1" />
+				<Option object_output="../../../obj/x64" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Option parameters="!!! This is just only a test !!! string forty-seven int 3" />
@@ -19,14 +19,12 @@
 				<Linker>
 					<Add option="-s" />
 					<Add option="-m64" />
-					<Add library="../../../lib/x64/libSDL2main.a" />
-					<Add library="../../../lib/x64/libSDL2.dll.a" />
 					<Add library="../../../lib/x64/libSDL_plus.a" />
 				</Linker>
 			</Target>
 			<Target title="Windows 32-bit">
-				<Option output="../../../bin/win32/SDL_test_main" prefix_auto="1" extension_auto="1" />
-				<Option object_output="../../obj/x32" />
+				<Option output="../../../bin/win32/SDLP_test_WalkDisplayModes" prefix_auto="1" extension_auto="1" />
+				<Option object_output="../../../obj/x32" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -44,15 +42,14 @@
 			<Add option="-Wall" />
 			<Add option="-D__WIN32__" />
 			<Add option="-DWINDOWS" />
+			<Add directory="../../../contrib/SDL2/include" />
 			<Add directory="../../../include" />
 		</Compiler>
 		<Linker>
 			<Add option="-static-libstdc++" />
 			<Add option="-static-libgcc" />
 		</Linker>
-		<Unit filename="../../../include/SDL_plus/SDLP_stdlib.hpp" />
-		<Unit filename="../../../include/SDL_plus/SDLP_video.hpp" />
-		<Unit filename="../../../tests/SDLP_test_main.cpp" />
+		<Unit filename="../../../tests/SDLP_test_WalkDisplayModes.cpp" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

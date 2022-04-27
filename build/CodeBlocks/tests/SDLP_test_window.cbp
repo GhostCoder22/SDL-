@@ -19,8 +19,8 @@
 				<Linker>
 					<Add option="-s" />
 					<Add option="-m64" />
+					<Add library="../../../contrib/SDL2/lib/x64/libSDL2.dll.a" />
 					<Add library="../../../lib/x64/libSDL_plus.a" />
-					<Add library="../../../lib/x64/libSDL2.dll.a" />
 				</Linker>
 			</Target>
 			<Target title="Windows 32-bit">
@@ -43,6 +43,7 @@
 			<Add option="-Wall" />
 			<Add option="-D__WIN32__" />
 			<Add option="-DWINDOWS" />
+			<Add directory="../../../contrib/SDL2/include" />
 			<Add directory="../../../include" />
 		</Compiler>
 		<Linker>

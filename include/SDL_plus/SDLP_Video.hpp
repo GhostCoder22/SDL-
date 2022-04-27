@@ -29,6 +29,8 @@
 #ifndef SDLP_VIDEO_HPP
 #define SDLP_VIDEO_HPP
 
+#include <SDL2/SDL_stdinc.h>
+
 #include <SDL_plus/SDLP_defines.hpp>
 #include <SDL_plus/SDLP_Video.hpp>
 
@@ -39,6 +41,40 @@ extern "C" {
 //#endif
 
 class CSDL_Window;
+
+typedef struct SDL_DisplayDPI
+{
+    int    index;
+    float  ddpi,hdpi,vdpi;
+} SDL_DisplayDPI;
+
+typedef int (*SDLP_DisplayModeWalker)(int displayIndex, SDL_DisplayMode* mode);
+
+class SDLPAPI CSDL_Video
+{
+  public:
+    CSDL_Video();
+    ~CSDL_Video();
+    CSDL_Video* Instance();
+
+    int WalkDisplayModes(SDLP_DisplayModeWalker walker);
+    int WalkDisplayModesEx(int displayIndex, SDLP_DisplayModeWalker walker);
+
+    const char* GetCurrentVideoDriver();
+    const char* GetVideoDriver(int index);
+    int         GetNumVideoDrivers();
+
+    const char* GetDisplayName(int displayIndex);
+
+    int              GetCurrentDisplayMode(int displayIndex, SDL_DisplayMode *mode);
+    int              GetDesktopDisplayMode(int displayIndex, SDL_DisplayMode *mode);
+    int              GetDisplayBounds(int displayIndex, SDL_Rect *rect);
+    int              GetNumVideoDisplays();
+    int              GetNumDisplayModes(int displayIndex);
+    int              GetDisplayMode(int displayIndex, int modeIndex, SDL_DisplayMode *mode);
+    SDL_DisplayMode* GetClosestDisplayMode(int displayIndex, const SDL_DisplayMode * mode, SDL_DisplayMode * closest);
+    int              GetDisplayDPI(int displayIndex, float * ddpi, float * hdpi, float * vdpi);
+};
 
 class SDLPAPI CSDL_Surface
 {
@@ -80,14 +116,24 @@ class SDLPAPI CSDL_Window: public CSDL_Surface
 
     SDL_Window* Create(const char* title, int x, int y, int w, int h, Uint32 flags);
     SDL_Window* CreateWithRenderer(const char* title, int width, int height, Uint32 window_flags, CSDL_Renderer* renderer);
+    SDL_Window* CreateFrom(const void *data);
+    void        Destroy();
     SDL_Window* Handle();
 
-    int SetFullscreen(Uint32 flags);
-    int GetFullscreen();
-    int Fullscreen();
+    Ustring Title();
+
+    int SetDisplayMode(const SDL_DisplayMode *mode);
+    int GetDisplayMode(SDL_DisplayMode *mode);
+    int SetFullscreenMode(Uint32 flags);
+    int GetFullscreenMode();
+
+    void DisableScreenSaver();
+    void EnableScreenSaver();
+    bool IsScreenSaverEnabled();
 
 
    // [Events]
+
     virtual bool onKeyDown(CSDL_Window* window, SDL_KeyboardEvent* event);
     virtual bool onKeyUp(CSDL_Window* window, SDL_KeyboardEvent* event);
     virtual bool onMouseButton(CSDL_Window* window, SDL_MouseButtonEvent* event);
@@ -96,6 +142,7 @@ class SDLPAPI CSDL_Window: public CSDL_Surface
 
   protected:
     SDL_Window* m_pWindow;
+    Ustring     m_szTitle;
     int         m_fFullscreen;
 };
 

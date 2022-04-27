@@ -20,30 +20,34 @@
 */
 
 /**
- *  \file SDLP_EventManager.hpp
+ *  \file SDLP_test_DisplayModeWalker.cpp
  *
- *  SDL+ Event Management Subsystem C++ header
+ *  SDL+ Test: Display Mode Walker
  */
 
-#ifdef __cplusplus
-#ifndef SDLP_EVENTMGR_HPP
-#define SDLP_EVENTMGR_HPP
+#include <SDL_plus.hpp>
 
-#include <SDL2/SDL.h>
-#include <SDL_plus/SDLP_defines.hpp>
-#include <SDL_plus/SDLP_Video.hpp>
+int SDLP_test_WalkDisplayModes(int displayIndex, SDL_DisplayMode* displayMode)
+{
+  printf("[%d]: %dx%d %dHz\n", displayIndex, displayMode->w, displayMode->h,
+                               displayMode->refresh_rate);
+  return true;
+}
 
-class SDLPAPI CSDL_EventManager
+define_SDLP_app(SDLP_test_WalkDisplay)
 {
   public:
-    CSDL_EventManager();
-    ~CSDL_EventManager();
+    int Main(CSDL* iface, Ustring appname, int argc, char** argv)
+    {
+      iface->Init(SDL_INIT_VIDEO);
 
-    bool ProcessEvents();
+      CSDL_Video videoInfo;
+      videoInfo.WalkDisplayModes(SDLP_test_WalkDisplayModes);
+      printf("\n");
+      system("PAUSE");
+      printf("\n");
 
-    void PostQuitEvent(bool postQuitEvent);
+      return 0;
+    }
 };
-
-#endif // SDLP_EVENTMGR_HPP
-#endif // __cplusplus
-
+declare_SDLP_app(SDLP_test_WalkDisplay, "SDL+ Test: Display Mode Walker");

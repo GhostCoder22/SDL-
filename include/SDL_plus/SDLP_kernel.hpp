@@ -41,6 +41,8 @@ typedef unsigned long SDLP_errorCode;
 typedef const char*   SDLP_errorMessage;
 
 class CSDL;
+class CSDL_Window;
+
 typedef struct SDLP
 {
     CSDL*   iface;
@@ -58,6 +60,7 @@ class SDLPAPI CSDL
   public:
     CSDL();
     ~CSDL();
+    CSDL* Instance();
 
     int Main(CSDL* iface, Ustring appname, int argc, char** argv);
 
@@ -66,6 +69,9 @@ class SDLPAPI CSDL
     int  InitSubSystem(Uint32 flags);
     void QuitSubSystem(Uint32 flags);
 
+    // Events
+    //
+    virtual bool onQuitEvent(CSDL* iface, CSDL_Window* window);
 
     Ustring AppName();
 
@@ -75,7 +81,7 @@ class SDLPAPI CSDL
                                                                Ustring nextArgV));
     bool CLI_ProcessResponseFile(int argc, char** argv, Ustring filename);
 };
-CSDL* SDLPAPI SDLP_GetInterface();
+CSDL* SDLPAPI CSDL_GetInterface();
 
 #ifdef WINDOWS
 #include <windows.h>

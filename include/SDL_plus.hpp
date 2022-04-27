@@ -46,10 +46,11 @@ class CSDL;
 class CSDL_Window;
 class CSDL_Surface;
 
-#include <SDL_plus/SDLP_stdlib.hpp>
-#include <SDL_plus/SDLP_kernel.hpp>
+#include <SDL_plus/SDLP_Kernel.hpp>
 #include <SDL_plus/SDLP_EventManager.hpp>
+#include <SDL_plus/SDLP_stdlib.hpp>
 #include <SDL_plus/SDLP_Video.hpp>
+#include <SDL_plus/SDLP_Version.hpp>
 #include <SDL_plus/Containers/TList.hxx>
 
 #endif // SDL_PLUS_HPP

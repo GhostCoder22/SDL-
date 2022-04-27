@@ -63,6 +63,8 @@ CSDL::~CSDL()
   }
 }
 
+CSDL* CSDL::Instance() { return this; }
+
 
 int CSDL::Main(CSDL* iface, Ustring appname, int argc, char** argv)
 {
@@ -105,6 +107,9 @@ void CSDL::QuitSubSystem(Uint32 flags)
     BITMASK_CLEAR(m_SDLP.flags, flags);
   }
 }
+
+
+bool CSDL::onQuitEvent(CSDL* iface, CSDL_Window* window) { return true; }
 
 
 Ustring CSDL::AppName()
@@ -187,10 +192,12 @@ bool CSDL::CLI_Process
 
 
 
-CSDL* SDLPAPI SDLP_GetInterface()
+CSDL* SDLPAPI CSDL_GetInterface()
 {
   return m_SDLP.iface;
 }
+
+
 
 #ifdef WINDOWS
 // CommandLineArgvA is borrowed code from ReactOS at:

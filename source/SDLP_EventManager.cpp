@@ -25,23 +25,21 @@
  *  SDL+ Event Subsystem C++ source
  */
 
+#include <SDL_plus/SDLP_Kernel.hpp>
 #include <SDL_plus/SDLP_EventManager.hpp>
 #include "SDLP_internals.hpp"
 
-CSDL_EventManager::CSDL_EventManager()
-{
-}
 
-CSDL_EventManager::~CSDL_EventManager()
-{
-}
+bool SDLP_quitEventPosted;
 
+CSDL_EventManager::CSDL_EventManager() { SDLP_quitEventPosted = false; }
+CSDL_EventManager::~CSDL_EventManager() { SDLP_quitEventPosted = false; }
 
 bool CSDL_EventManager::ProcessEvents()
 {
   bool result = true;
-  SDL_Event events; bool quitEvent = false;
-  while (!quitEvent)
+  SDL_Event events;
+  while (!SDLP_quitEventPosted)
   {
     while (SDL_PollEvent(&events))
     {
@@ -52,15 +50,23 @@ bool CSDL_EventManager::ProcessEvents()
         switch (events.type)
         {
           case SDL_QUIT:
-            quitEvent = true;
+          {
+            CSDL* iface = CSDL_GetInterface();
+            result = iface->onQuitEvent(iface, window);
+            if ((result) && (CSDL_Window_Ref() == 1))
+            {
+              window->Destroy();
+              SDLP_quitEventPosted = true;
+              return true;
+            }
+          }
           return false;
           case SDL_WINDOWEVENT:
             switch (events.window.event)
             {
               case SDL_WINDOWEVENT_CLOSE:
               {
-                quitEvent = true;
-                return false;
+
               }
             }
           break;
@@ -88,4 +94,10 @@ bool CSDL_EventManager::ProcessEvents()
     }
   }
   return result;
+}
+
+
+void CSDL_EventManager::PostQuitEvent(bool postQuitEvent)
+{
+  SDLP_quitEventPosted = postQuitEvent;
 }

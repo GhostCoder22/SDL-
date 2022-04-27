@@ -33,6 +33,9 @@
 #include <SDL_plus/Containers/TList.hxx>
 
 TNode2W<CSDL_Window*>** SDLP_WindowTablePtr();
+void     CSDL_Window_AddRef();
+void     CSDL_Window_ReleaseRef();
+TNodeID  CSDL_Window_Ref();
 
 #endif // SDLP_INTERNALS_HPP
 #endif // __cplusplus
