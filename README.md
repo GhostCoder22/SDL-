@@ -9,6 +9,7 @@ So far, SDL+ includes the following features:
 2) Basic Command line Interpreter (CLI) stored in a linked list and parsed by walking through said linked list. SDL_test_main demostrates this.
 3) SDL window creation (CSDL_Window::Create) stores in a window table (linked list).
 4) Basic event processor (CSDL_EventManager::ProcessEvents) parses window table to correctly make calls to indevidual window method procedures (CSDL_Window::onKeyDown). SDL_test_window demostates this.
+5) Display mode walking (emumerating) accomplished by CSDL_Video::WalkDisplayModes and CSDL_Video::WalkDisplayModesEx.
 
 Until I'm able to build an automated script or put together a batch file, the installation SDL 2.x development libraies will have to manually be accomplished with the following steps:
 
