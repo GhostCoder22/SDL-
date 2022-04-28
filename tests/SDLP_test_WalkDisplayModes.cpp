@@ -27,11 +27,18 @@
 
 #include <SDL_plus.hpp>
 
-int SDLP_test_WalkDisplayModes(int displayIndex, SDL_DisplayMode* displayMode)
+int SDLP_test_WalkDisplayModes(int displayIndex, SDL_DisplayMode* displayMode, const char* displayName)
 {
-  printf("[%d]: %dx%d %dHz\n", displayIndex, displayMode->w, displayMode->h,
-                               displayMode->refresh_rate);
-  return true;
+  printf("[%d]: %dx%d %d BPP @ %dHz (%s)\n",
+         displayIndex, displayMode->w, displayMode->h, SDL_BITSPERPIXEL(displayMode->format),
+         displayMode->refresh_rate, displayName);
+  return 0;
+}
+
+int SDLP_test_WalkVideoDrivers(int driverIndex, const char* driverName)
+{
+  printf("[%d]: %s\n", driverIndex, driverName);
+  return 0;
 }
 
 define_SDLP_app(SDLP_test_WalkDisplay)
@@ -43,6 +50,10 @@ define_SDLP_app(SDLP_test_WalkDisplay)
 
       CSDL_Video videoInfo;
       videoInfo.WalkDisplayModes(SDLP_test_WalkDisplayModes);
+      printf("\n");
+      system("PAUSE");
+      printf("\n");
+      videoInfo.WalkVideoDrivers(SDLP_test_WalkVideoDrivers);
       printf("\n");
       system("PAUSE");
       printf("\n");
