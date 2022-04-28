@@ -48,7 +48,8 @@ typedef struct SDL_DisplayDPI
     float  ddpi,hdpi,vdpi;
 } SDL_DisplayDPI;
 
-typedef int (*SDLP_DisplayModeWalker)(int displayIndex, SDL_DisplayMode* mode);
+typedef int (*SDLP_DisplayModeWalker)(int displayIndex, SDL_DisplayMode* mode, const char* displayName);
+typedef int (*SDLP_VideoDriverWalker)(int driverIndex, const char* driverName);
 
 class SDLPAPI CSDL_Video
 {
@@ -58,8 +59,8 @@ class SDLPAPI CSDL_Video
     CSDL_Video* Instance();
 
     int WalkDisplayModes(SDLP_DisplayModeWalker walker);
-    int WalkDisplayModesEx(int displayIndex, SDLP_DisplayModeWalker walker);
 
+    int         WalkVideoDrivers(SDLP_VideoDriverWalker walker);
     const char* GetCurrentVideoDriver();
     const char* GetVideoDriver(int index);
     int         GetNumVideoDrivers();
