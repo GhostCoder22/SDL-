@@ -34,10 +34,35 @@ CSDL_Video* CSDL_Video::Instance() { return this; }
 
 int CSDL_Video::WalkDisplayModes(SDLP_DisplayModeWalker walker)
 {
-  return WalkDisplayModesEx(0, walker);
+  if (walker == nullptr)
+  {
+    SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Missing parameter.");
+    return -1;
+  }
+
+  int displays = SDL_GetNumVideoDisplays();
+  for (int displayIndex = 0; displayIndex < displays; displayIndex++)
+  {
+    int displayModes = SDL_GetNumDisplayModes(displayIndex);
+    if (displayModes < 1)
+      return displayModes;
+
+    for (int i = 0; i < displayModes; i++)
+    {
+      SDL_DisplayMode displayMode;
+      if (SDL_GetDisplayMode(displayIndex, i, &displayMode) == 0)
+      {
+        int result = (walker)(i, &displayMode, SDL_GetDisplayName(i));
+        if (result < 0)
+          return -1;
+      }
+    }
+  }
+  return 0;
 }
 
-int CSDL_Video::WalkDisplayModesEx(int displayIndex, SDLP_DisplayModeWalker walker)
+
+int CSDL_Video::WalkVideoDrivers(SDLP_VideoDriverWalker walker)
 {
   if (walker == nullptr)
   {
@@ -45,24 +70,15 @@ int CSDL_Video::WalkDisplayModesEx(int displayIndex, SDLP_DisplayModeWalker walk
     return -1;
   }
 
-  int displays = (displayIndex == 0 ? 0 : SDL_GetNumVideoDisplays());
-  int displayModes = SDL_GetNumDisplayModes(displays);
-  if (displayModes < 1)
-    return displayModes;
-
-  for (int i = 0; i < displayModes; i++)
+  int drivers = SDL_GetNumVideoDrivers();
+  for (int i = 0; i < drivers; i++)
   {
-    SDL_DisplayMode displayMode;
-    if (SDL_GetDisplayMode(displays, i, &displayMode) == 0)
-    {
-      int result = (walker)(i, &displayMode);
-      if (result < 0)
-        return -1;
-    }
+    int result = (walker)(i, SDL_GetVideoDriver(i));
+    if (result < 0)
+      return -1;
   }
   return 0;
 }
-
 
 const char* CSDL_Video::GetCurrentVideoDriver()
 {
