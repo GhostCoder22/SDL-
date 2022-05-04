@@ -10,7 +10,12 @@ So far, SDL+ includes the following features:
 3) SDL window creation (CSDL_Window::Create) stores in a window table (linked list).
 4) Basic event processor (CSDL_EventManager::ProcessEvents) parses window table to correctly make calls to indevidual window method procedures (CSDL_Window::onKeyDown). SDL_test_window demostates this.
 5) Display mode walking (emumerating) accomplished by CSDL_Video::WalkDisplayModes and CSDL_Video::WalkDisplayModesEx.
-6) Full implementation of SDL 2.x subsystems.
+6) Nearly full implementation of SDL 2.x subsystems as C++ classes'
+1) CSDL_Window -> SDL window
+2) CSDL_Surface -> SDL surface
+3) CSDL_OpenGL -> SDL OpenGL support
+4) CSDL_Vulkan -> SDL Vulkan support
+5) CSDL_Texture -> SDL texture **UNIMPLEMENTED**
 
 Until I'm able to build an automated script or put together a batch file, the installation SDL 2.x development libraies will have to manually be accomplished with the following steps:
 
