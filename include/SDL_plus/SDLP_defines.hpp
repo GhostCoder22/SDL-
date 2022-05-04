@@ -80,6 +80,12 @@ typedef const wchar_t* Uwstring;
 #endif // UNICODE
 #endif // TEXT
 
+typedef unsigned char  SDL_byte;
+typedef unsigned short SDL_word;
+typedef unsigned int   SDL_Uint;
+typedef unsigned long  SDL_Ulong;
+typedef unsigned long  SDL_dword;
+
 #define BITMASK_PUT(bit, mask) bit = bit | mask
 #define BITMASK_CLEAR(bit, mask) bit = bit & ~mask
 #define BITMASK_FLIP(bit, mask) bit = bit ^ mask
