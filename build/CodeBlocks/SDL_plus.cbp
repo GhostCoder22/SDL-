@@ -61,11 +61,12 @@
 		<Unit filename="../../include/SDL_plus.hpp" />
 		<Unit filename="../../include/SDL_plus/Containers/TList.hxx" />
 		<Unit filename="../../include/SDL_plus/SDLP_EventManager.hpp" />
-		<Unit filename="../../include/SDL_plus/SDLP_Version.hpp" />
+		<Unit filename="../../include/SDL_plus/SDLP_SystemInfo.hpp" />
 		<Unit filename="../../include/SDL_plus/SDLP_Video.hpp" />
 		<Unit filename="../../include/SDL_plus/SDLP_defines.hpp" />
 		<Unit filename="../../include/SDL_plus/SDLP_kernel.hpp" />
 		<Unit filename="../../source/SDLP_EventManager.cpp" />
+		<Unit filename="../../source/SDLP_SystemInfo.cpp" />
 		<Unit filename="../../source/SDLP_Video.cpp" />
 		<Unit filename="../../source/SDLP_internals.cpp" />
 		<Unit filename="../../source/SDLP_internals.hpp" />
