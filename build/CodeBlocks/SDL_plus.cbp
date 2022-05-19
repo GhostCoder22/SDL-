@@ -59,18 +59,18 @@
 			<Add option="-static-libgcc" />
 		</Linker>
 		<Unit filename="../../include/SDL_plus.hpp" />
-		<Unit filename="../../include/SDL_plus/Containers/TList.hxx" />
+		<Unit filename="../../include/Containers/TList.hxx" />
+		<Unit filename="../../include/SDL_plus/SDLP_defines.hpp" />
+		<Unit filename="../../include/SDL_plus/SDLP_Kernel.hpp" />
+		<Unit filename="../../include/SDL_plus/SDLP_Video.hpp" />
 		<Unit filename="../../include/SDL_plus/SDLP_EventManager.hpp" />
 		<Unit filename="../../include/SDL_plus/SDLP_SystemInfo.hpp" />
-		<Unit filename="../../include/SDL_plus/SDLP_Video.hpp" />
-		<Unit filename="../../include/SDL_plus/SDLP_defines.hpp" />
-		<Unit filename="../../include/SDL_plus/SDLP_kernel.hpp" />
+		<Unit filename="../../source/SDLP_Kernel.cpp" />
+		<Unit filename="../../source/SDLP_Video.cpp" />
 		<Unit filename="../../source/SDLP_EventManager.cpp" />
 		<Unit filename="../../source/SDLP_SystemInfo.cpp" />
-		<Unit filename="../../source/SDLP_Video.cpp" />
 		<Unit filename="../../source/SDLP_internals.cpp" />
 		<Unit filename="../../source/SDLP_internals.hpp" />
-		<Unit filename="../../source/SDLP_kernel.cpp" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
