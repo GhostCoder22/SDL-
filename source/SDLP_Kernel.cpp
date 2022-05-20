@@ -25,7 +25,7 @@
  *  Kernel C++ source for the SDL+ library
  */
 
-#include <SDL_plus/SDLP_kernel.hpp>
+#include <SDL_plus/SDLP_Kernel.hpp>
 #include "SDLP_internals.hpp"
 
 struct SDLP_CLI_ENTRY
