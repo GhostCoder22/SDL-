@@ -127,6 +127,8 @@ class SDLPAPI CSDL_Surface
 };
 
 
+typedef int (*SDLP_RendererDriverWalker_t)(int driverIndex, SDL_RendererInfo* driverInfo);
+
 class SDLPAPI CSDL_Renderer
 {
   public:
@@ -135,7 +137,15 @@ class SDLPAPI CSDL_Renderer
     CSDL_Renderer* Interface();
 
     SDL_Renderer* Create(CSDL_Window* window, int index, Uint32 flags);
+    SDL_Renderer* CreateSoftware(CSDL_Surface* surface);
+    void          Destroy();
     SDL_Renderer* Handle();
+
+    int GetInfo(SDL_RendererInfo* info);
+
+    int GetNumDrivers();
+    int GetDriverInfo(int index, SDL_RendererInfo* info);
+    int WalkDrivers(SDLP_RendererDriverWalker_t walker);
 
   private:
     SDL_Renderer* m_SDL_Renderer;
@@ -318,6 +328,15 @@ class SDLPAPI CSDL_Vulkan
     CSDL_Window* m_CSDL_Window;
     VkInstance   m_VkInstance;
     VkSurfaceKHR m_VkSurfaceKHR;
+};
+
+
+class SDLPAPI CSDL_Canvas
+{
+  public:
+    CSDL_Canvas();
+    ~CSDL_Canvas();
+    CSDL_Canvas* Interface();
 };
 
 
